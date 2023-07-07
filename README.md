@@ -1,4 +1,4 @@
-# CRNS-AIST-JRL-VR-Demo
+﻿# CRNS-AIST-JRL-VR-Demo
  CRNS AIST JRL VR Assignment for VR Software Engineer interview. This project consists of two main
  tasks: Task 1 and Task 2. Each task involves different scripts and functionalities within the project.
 
@@ -139,9 +139,48 @@ Import the .UnityPackage file into your Unity project by going to: "Assets" -> "
 ## Running the application with the Build File
 
 Included in the /Builds folder is a **"CRNS AIST JRL VR Demo.exe"**. To run the application,
-double-click the .exe
+double-click the .exe.
 
+# Application Instructions
 
+Upon running the application, Tasks 1 and 2 can be accomplished and controlled using the
+following instructions.
+
+## Task 1 Instructions:
+In the scene is included 5 default Force Simulate Sensors positioned at the world origin with
+varying default position and force readings, as well as a UI at the top left corner of the
+Desktop window showing each sensors' name, position, and force reading.
+
+To toggle the hidden Sensor controls, press **S**. Controls for the sensors will appear, including
+- A sensor selection dropdown
+- A button to add remove the selected sensor
+- A button to add a new sensor at Position (0,0,0) and Force reading (0,0,0)
+- Input fields to edit the selected sensor's Position and Force readings
+- A button to update the selected sensor with the inputted Position and Force readings
+- A color change threshold slider to determine at what Force magnitude our sensor's readings are considered "High Force"
+- X, Y, and Z Force sliders to change force readings for **all** sensors at once
+- A button to set **all** sensors' force readings
+
+To toggle the hidden Low/High Force Color Picker controls, press **P**. A color picker UI will appear,
+which allows you to choose a certain Saturation and Value using the UI cursor, as well as the desired
+Hue. On the bottom left, a hex value will also be shown for the current color, and can be edited by
+typing in your own hexadecimal color value.
+
+Once a color is chosen, an ouput color is shown on the right-most side, and can be used to set
+all simulated sensors' low and high force colors using the appropriate buttons on the top-right of the
+UI.
+
+## Task 2 Instructions:
+In order to accomlish task 2, the desktop can be clicked at any point in time to show the Left/Right
+controls UI. Pressing **L**, **R**, **Left Arrow Key**, **Right Arrow Key**, or **Left Trigger**
+and **Right Trigger** on an VR/XR controller, or using a microphone to say "Left" or "Right" will
+show the Left/Right controls UI. Any one of these inputs will show a feedback for a Left or Right action that was input.
+Once the Left/Right controls UI is active and shown, you can also use the mouse on the desktop
+to click on the Left and Right buttons to trigger Left or Right actions. If 5 seconds have passed, the UI
+will automatically be hidden, and another input must be made to show the Left/Right feedback UI once again,
+and you can continue to send Left/Right inputs in any desired fashion. Voice input may be made in English
+("Left" and "Right"), Japanese ("みぎ/右" and "ひだり/左"), and in maritime directions (i.e. "Port" and
+"Starboard").
 
 
 # Credits:
