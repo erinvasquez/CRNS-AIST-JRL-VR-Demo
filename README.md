@@ -71,3 +71,79 @@ sensors. These tasks combine various scripts and UI elements to create an intera
 system for controlling objects and managing sensor data.
 
 
+## Editor Installation
+
+To run this Unity project, follow these steps:
+
+### 1) Clone the Respository:
+Click on the "Code" button and copy the repository URL. Open a terminal or command prompt on your
+local machine, navigate to the desired directory, and run the following command:
+
+` git clone https://github.com/erinvasquez/CRNS-AIST-JRL-VR-Demo.git `
+
+This will clone the repository to your local machine.
+
+OR
+
+Click on the "Code" button and download the ZIP file and save it to the desired directory, and
+unzip the file.
+
+Included will be all the project files, as well as a .UnityPackage file that can
+be imported into the Unity Editor.
+
+### 2) Open the project in Unity:
+Launch the Unity Editor on your computer. Click on "Open" or "Load" in the Unity Editor and navigate
+to the directory where you cloned the repository. Select the Unity project folder (it should contain
+the Assets, Library, and ProjectSettings folders) and click "Open".
+
+### 3) Resolve Dependencies:
+Once the project is open in Unity, the editor will start importing and compiling the necessary assets
+and scripts. If there are any missing dependencies or errors, Unity will prompt you to resolve them.
+Follow the on-screen instructions to resolve any dependencies and ensure the project compiles
+successfully.
+
+### 4) Set the Scene:
+In the Unity Editor, navigate to the "Project" window (usually located in the bottom-left corner).
+Expand the folder structure and find the main scene file ** (VRDemoScene1.unity) **. Double-click
+on the scene file to open it in the Scene View.
+
+### 5) Run the Project:
+Press the "Play" button in the Unity Editor toolbar (or use the shortcut Ctrl + P) to run the
+project. Unity will compile the scripts and assets and launch the project in Play Mode. Note:
+Make sure you have the necessary hardware or plugins configured to suport the specific input
+methods used in the project, such as VR controllers or voice input devices.
+
+## Unity Package installation:
+
+### 1) Clone the Respository:
+Click on the "Code" button and copy the repository URL. Open a terminal or command prompt on your
+local machine, navigate to the desired directory, and run the following command:
+
+` git clone https://github.com/erinvasquez/CRNS-AIST-JRL-VR-Demo.git `
+
+This will clone the repository to your local machine.
+
+OR
+
+Click on the "Code" button and download the ZIP file and save it to the desired directory, and
+unzip the file.
+
+Included will be all the project files, as well as a .UnityPackage file that can
+be imported into the Unity Editor.
+
+### 2) Import the .UnityPackage file
+
+Import the .UnityPackage file into your Unity project by going to: "Assets" -> "Import Package"
+-> "Custom Package" -> Select the Unity Package file.
+
+## Running the application with the Build File
+
+Included in the /Builds folder is a "CRNS AIST JRL VR Demo.exe". To run the application,
+double-click the .exe
+
+
+
+
+# Credits:
+For the Color Picker UI implementation, Baker FX's tutorial on
+YouTube: https://www.youtube.com/watch?v=otDHGmncBQY&ab_channel=BakerFX
