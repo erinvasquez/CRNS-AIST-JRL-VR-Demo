@@ -104,7 +104,7 @@ successfully.
 
 ### 4) Set the Scene:
 In the Unity Editor, navigate to the "Project" window (usually located in the bottom-left corner).
-Expand the folder structure and find the main scene file ** (VRDemoScene1.unity) **. Double-click
+Expand the folder structure and find the main scene file **(VRDemoScene1.unity)**. Double-click
 on the scene file to open it in the Scene View.
 
 ### 5) Run the Project:
@@ -138,7 +138,7 @@ Import the .UnityPackage file into your Unity project by going to: "Assets" -> "
 
 ## Running the application with the Build File
 
-Included in the /Builds folder is a "CRNS AIST JRL VR Demo.exe". To run the application,
+Included in the /Builds folder is a **"CRNS AIST JRL VR Demo.exe"**. To run the application,
 double-click the .exe
 
 
