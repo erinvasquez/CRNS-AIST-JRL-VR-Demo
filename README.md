@@ -50,12 +50,6 @@ The SensorUI script handles the UI controls for the force sensors and color pick
 visibility of the sensor controls UI and the color picker UI based on input events. The script
 utilizes the InputSystem package to detect input actions and control the UI visibility.
 
-## Conclusion
-Task 1 focuses on implementing voice and input control for left and right movements, while Task 2
-involves simulating force sensors and providing UI controls for manipulating and visualizing the
-sensors. These tasks combine various scripts and UI elements to create an interactive and versatile
-system for controlling objects and managing sensor data.
-
 ### ColorPickerControl.cs
 The ColorPickerControl script is responsible for controlling a color picker UI. It allows the user
 to select a color by manipulating the hue, saturation, and value components. The script updates the
@@ -68,3 +62,12 @@ The SVIControl script works in conjunction with the color picker UI to control t
 value components. It allows the user to click or drag on the UI to update the saturation and value
 values, which in turn update the color picker UI. The script implements the IDragHandler and
 IPointerClickHandler interfaces to detect input events and update the color picker accordingly.
+
+
+## Conclusion
+Task 1 focuses on implementing voice and input control for left and right movements, while Task 2
+involves simulating force sensors and providing UI controls for manipulating and visualizing the
+sensors. These tasks combine various scripts and UI elements to create an interactive and versatile
+system for controlling objects and managing sensor data.
+
+
