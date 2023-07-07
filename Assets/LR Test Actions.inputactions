@@ -98,8 +98,8 @@
                 },
                 {
                     "name": "",
-                    "id": "22c8d08e-1571-439e-bbd6-032ec91d9da5",
-                    "path": "<ViveController>{LeftHand}/triggerPressed",
+                    "id": "4fa5e060-5f4c-473d-9069-5e9c94143894",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -110,7 +110,7 @@
                 {
                     "name": "",
                     "id": "4acfcde8-9b57-45b0-833a-2edd49edf610",
-                    "path": "<ViveController>{RightHand}/triggerPressed",
+                    "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
