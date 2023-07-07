@@ -124,7 +124,7 @@ public class LRControlTestI : MonoBehaviour {
     /// <summary>
     /// Hide our canvas UI after a specific float time seconds
     /// </summary>
-    /// <param name="delay"></param>
+    /// <param name="delay">Time in seconds it takes to hide UI</param>
     /// <returns></returns>
     private IEnumerator HideCanvasAfterDelay(float delay) {
 
@@ -143,10 +143,9 @@ public class LRControlTestI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Once a phrase is recognize, convert our speech to a string and print to Unity console,
-    /// 
+    /// Once a phrase is recognized, convert our speech to a string
     /// </summary>
-    /// <param name="speech"></param>
+    /// <param name="speech">Windows speech recognized phrase data</param>
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech) {
         
         // Print out what we said in our console

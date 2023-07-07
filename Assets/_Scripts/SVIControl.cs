@@ -10,12 +10,9 @@ using UnityEngine.UI;
 public class SVIControl : MonoBehaviour, IDragHandler, IPointerClickHandler {
 
     [SerializeField] private Image pickerImage;
-
     private RawImage SVImage;
-
     private ColorPickerControl colorPickerControl;
-
-    private RectTransform rectTransform, pickerTransform;
+    private RectTransform rectTransform, pickerCursorTransform;
 
     private void Awake() {
 
@@ -23,8 +20,11 @@ public class SVIControl : MonoBehaviour, IDragHandler, IPointerClickHandler {
         colorPickerControl = FindObjectOfType<ColorPickerControl>();
         rectTransform = GetComponent<RectTransform>();
 
-        pickerTransform = pickerImage.GetComponent<RectTransform>();
-        pickerTransform.position = new Vector2(-(rectTransform.sizeDelta.x * 0.5f),
+        pickerCursorTransform = pickerImage.GetComponent<RectTransform>();
+
+        // Set position of our color picker cursor relative to the UI, positioning
+        // it to the bottom left of the UI area
+        pickerCursorTransform.position = new Vector2(-(rectTransform.sizeDelta.x * 0.5f),
             -(rectTransform.sizeDelta.y * 0.5f));
 
     }
@@ -35,11 +35,17 @@ public class SVIControl : MonoBehaviour, IDragHandler, IPointerClickHandler {
     /// </summary>
     /// <param name="eventData"></param>
     void UpdateColor(PointerEventData eventData) {
+        
+        // Convert the screen position of our pointer event to the local position within our
+        // Saturation and Value UI relative to its boundaries
         Vector3 pos = rectTransform.InverseTransformPoint(eventData.position);
 
+        // Get our delta X and Y for clamping our pointer position
         float deltaX = rectTransform.sizeDelta.x * 0.5f;
         float deltaY = rectTransform.sizeDelta.y * 0.5f;
 
+        // Check if our position values exceed our boundary limits,
+        // if they do, clamp them!
         if (pos.x < -deltaX) {
             pos.x = -deltaX;
         } else if (pos.x > deltaX) {
@@ -52,13 +58,19 @@ public class SVIControl : MonoBehaviour, IDragHandler, IPointerClickHandler {
             pos.y = deltaY;
         }
 
+        // Get our final position values to determin our saturation (xNorm) and value
+        // values (yNorm)
         float x = pos.x + deltaX;
         float y = pos.y + deltaY;
 
+        // Normalize our saturation and value
         float xNorm = x / rectTransform.sizeDelta.x;
         float yNorm = y / rectTransform.sizeDelta.y;
 
-        pickerTransform.localPosition = pos;
+        // update our color picker cursor to our translated position
+        pickerCursorTransform.localPosition = pos;
+
+        // Set our color based on our normalized y value
         pickerImage.color = Color.HSVToRGB(0, 0, 1 - yNorm);
 
         // Set Saturation and Value based on our translated pointer data

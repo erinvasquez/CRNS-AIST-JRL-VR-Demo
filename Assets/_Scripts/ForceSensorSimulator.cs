@@ -2,25 +2,58 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using UnityEngine.InputSystem;
 
 /// <summary>
-/// Simulates multiple force sensors
+/// Simulates multiple force sensors, provides functionality to create
+/// arrow objects representingtheir positions and forces, as well as updating
+/// these arrows and their associated UI elements.
 /// </summary>
 public class ForceSensorSimulator : MonoBehaviour {
-    public GameObject arrowPrefab;  // Prefab for the arrow object
 
-    [SerializeField] private Color lowForceColor = Color.green;  // Color for low force readings
-    [SerializeField] private Color highForceColor = Color.red;  // Color for high force readings
+    /// <summary>
+    /// Arrow object prefab
+    /// </summary>
+    public GameObject arrowPrefab;
+
+    /// <summary>
+    /// Color for low force readings
+    /// </summary>
+    [SerializeField] private Color lowForceColor = Color.green;
+    /// <summary>
+    /// Color for high force readings
+    /// </summary>
+    [SerializeField] private Color highForceColor = Color.red;
     [SerializeField][Range(0f, 1f)] private float colorTransparency = 0.66f;
 
-    [SerializeField] private float colorChangeThreshold = 25f;  // Threshold for color change
+    /// <summary>
+    /// Threshold for color change
+    /// </summary>
+    [SerializeField] private float colorChangeThreshold = 25f;
 
+    /// <summary>
+    /// Our UI threshold slider
+    /// </summary>
+    [SerializeField] private Slider colorChangeThresholdSlider;
+
+    /// <summary>
+    /// Our UI new threshold text
+    /// </summary>
+    [SerializeField] private TextMeshProUGUI thresholdText;
+
+    /// <summary>
+    /// Our simulate sensor array
+    /// </summary>
     [SerializeField] private SimulateSensor[] sensors = new SimulateSensor[0];
 
-    private GameObject[] arrows = new GameObject[0]; // store instantiated arrow objects
-    private bool updateArrowsNeeded = false; // flag to track if arrows need updating
+    /// <summary>
+    /// Stores instantiated arrow objects
+    /// </summary>
+    private GameObject[] arrows = new GameObject[0];
 
+    /// <summary>
+    /// Flag to track if arrows need updating
+    /// </summary>
+    private bool updateArrowsNeeded = false;
 
     public TMP_Dropdown sensorDropdown;
     public Button updateSensorButton;
@@ -51,9 +84,17 @@ public class ForceSensorSimulator : MonoBehaviour {
     public TextMeshProUGUI allForceZValText;
     public Button setAllForcesButton;
 
+
     private void Start() {
+
+        // Create our first batch of arrows and update our UI
         CreateArrows();
         UpdateSensorDataFields();
+
+        // Update our threshold text with our default value
+        thresholdText.text = colorChangeThreshold.ToString();
+        colorChangeThresholdSlider.value = colorChangeThreshold;
+
     }
 
     private void Update() {
@@ -65,6 +106,11 @@ public class ForceSensorSimulator : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Create a new set of arrows by destroying any old ones and
+    /// using our simulate sensor data to create any non-zero force reading
+    /// arrows
+    /// </summary>
     private void CreateArrows() {
         // Destroy any existing arrow GameObjects
         foreach (GameObject arrow in arrows) {
@@ -84,21 +130,22 @@ public class ForceSensorSimulator : MonoBehaviour {
             arrows[i] = arrow;
             arrow.transform.parent = transform;
 
+            /*
             if (sensor.ForceReading == Vector3.zero) {
-                // Set the force reading for the a default arrow
+                // Set the force reading for a default arrow
+                // TODO: check if making this (1,1,1) force arrow is necessary
                 sensor.ForceReading = new Vector3(1f, 1f, 1f);
             }
+            */
 
             // Set the scale of the arrow based on the initial force magnitude
             float initialForceMagnitude = sensor.ForceReading.magnitude;
             arrow.transform.localScale = new Vector3(initialForceMagnitude, initialForceMagnitude, initialForceMagnitude);
 
-
             // Change the color of the arrow based on the initial force magnitude
             Color arrowColor = GetArrowColor(initialForceMagnitude);
             arrowColor.a = colorTransparency;
             arrow.GetComponent<Renderer>().material.SetColor("_Color", arrowColor);
-
 
             // Orient the arrow based on force reading
             arrow.transform.forward = sensors[i].ForceReading.normalized;
@@ -110,6 +157,9 @@ public class ForceSensorSimulator : MonoBehaviour {
         UpdateSensorDropdownOptions();
     }
 
+    /// <summary>
+    /// Whether or not we trigger an update to our arrows
+    /// </summary>
     public void TriggerUpdateArrows() {
         updateArrowsNeeded = true;
     }
@@ -122,13 +172,16 @@ public class ForceSensorSimulator : MonoBehaviour {
         int selectedIndex = sensorDropdown.value; // get the selected sensor
 
         for (int i = 0; i < sensors.Length; i++) {
+            // Get a reference to our simulate sensor.
             SimulateSensor sensor = sensors[i];
 
-            // if the sensor has a zero force reading, just skip it
+            // if the sensor has a zero force reading, just skip it,
+            // it has no arrow and will have no arrow
             if (sensor.ForceReading == Vector3.zero) {
                 continue;
             }
 
+            // Get a reference to the current arrow
             GameObject arrow = arrows[i];
 
             // If arrow isn't null
@@ -147,6 +200,7 @@ public class ForceSensorSimulator : MonoBehaviour {
 
                 // Orient the arrow based on the force reading
                 arrow.transform.forward = sensor.ForceReading.normalized;
+
             } else {
                 // this sensor has no arrow as it had a zero-force reading before, make one
                 // Create the arrow for the updated sensor arrow
@@ -169,10 +223,15 @@ public class ForceSensorSimulator : MonoBehaviour {
 
         }
 
+        // Update our sensor data text
         UpdateSensorsText();
+
     }
 
-
+    /// <summary>
+    /// Adds a new simulate force sensor to our list of sensors with zero position
+    /// and force positon
+    /// </summary>
     public void AddSensor() {
         // Create a new sensor with zero values
         SimulateSensor newSensor = new SimulateSensor {
@@ -197,22 +256,26 @@ public class ForceSensorSimulator : MonoBehaviour {
             // Update scale, color, and orientation of the arrow based on the force reading
             float forceMagnitude = newSensor.ForceReading.magnitude;
             arrow.transform.localScale = Vector3.one * forceMagnitude;
-
             Color arrowColor = GetArrowColor(forceMagnitude);
             arrowColor.a = colorTransparency;
             arrow.GetComponent<Renderer>().material.SetColor("_Color", arrowColor);
-
             arrow.transform.forward = newSensor.ForceReading.normalized;
 
-            newSensor.HasArrow = true; // Set the flag to true for sensors with arrows
+            // Set the flag to true for sensors with arrows
+            newSensor.HasArrow = true;
         }
 
         // Update the arrows and UI elements
         UpdateArrows();
         UpdateSensorDropdownOptions();
+
     }
 
-
+    /// <summary>
+    /// Called by Input System and a UI button, attempts to update the selected sensor
+    /// from our dropdown with the values inputted into our position and force
+    /// input fields
+    /// </summary>
     public void UpdateSelectedSensor() {
         int selectedIndex = sensorDropdown.value;
 
@@ -234,6 +297,7 @@ public class ForceSensorSimulator : MonoBehaviour {
             } else {
                 Debug.Log("Parsing force values failed! TODO: Send an error message!");
             }
+
         }
 
         // Update the arrows and UI elements
@@ -241,6 +305,7 @@ public class ForceSensorSimulator : MonoBehaviour {
         {
             UpdateArrows();
         }
+
         UpdateSensorsText();
     }
 
@@ -290,17 +355,20 @@ public class ForceSensorSimulator : MonoBehaviour {
         UpdateSensorDropdownOptions();
     }
 
-
-
-
-
+    /// <summary>
+    /// Update our UI Dropdown with the current sensor options
+    /// </summary>
     private void UpdateSensorDropdownOptions() {
+
+        // Clear our dropdown options
         sensorDropdown.ClearOptions();
 
+        // Add our updated options
         for (int i = 0; i < sensors.Length; i++) {
             sensorDropdown.options.Add(new TMP_Dropdown.OptionData($"Sensor {i}"));
         }
 
+        // Refresh our dropdown's current value
         sensorDropdown.RefreshShownValue();
 
         // Update the sensor data fields with the newly selected sensor
@@ -328,6 +396,7 @@ public class ForceSensorSimulator : MonoBehaviour {
             forceYInput.text = selectedSensor.ForceReading.y.ToString();
             forceZInput.text = selectedSensor.ForceReading.z.ToString();
         } else {
+
             // No sensor selected or out of range, clear input fields
             positionXInput.text = "";
             positionYInput.text = "";
@@ -406,6 +475,12 @@ public class ForceSensorSimulator : MonoBehaviour {
         UpdateArrows(); // Then update the arrows based on the updated force readings
     }
 
+    /// <summary>
+    /// Get an arrow color based on a force magnitude and our current
+    /// low and high force colors
+    /// </summary>
+    /// <param name="forceMagnitude">The force magnitude our sensor will use</param>
+    /// <returns></returns>
     private Color GetArrowColor(float forceMagnitude) {
 
         if (forceMagnitude >= colorChangeThreshold) {
@@ -421,7 +496,7 @@ public class ForceSensorSimulator : MonoBehaviour {
     /// <summary>
     /// Sets a new low force color
     /// </summary>
-    /// <param name="_newColor"></param>
+    /// <param name="_newColor">Our new low force color</param>
     public void SetLowForceColor(Color _newColor) {
         lowForceColor = _newColor;
 
@@ -439,7 +514,7 @@ public class ForceSensorSimulator : MonoBehaviour {
     /// <summary>
     /// Sets a new high force color
     /// </summary>
-    /// <param name="_newColor"></param>
+    /// <param name="_newColor">Our new High force color</param>
     public void SetHighForceColor(Color _newColor) {
         highForceColor = _newColor;
 
@@ -451,6 +526,25 @@ public class ForceSensorSimulator : MonoBehaviour {
                 arrow.GetComponent<Renderer>().material.SetColor("_Color", arrowColor);
             }
         }
+
+    }
+
+    /// <summary>
+    /// Called by our threshold slider on value changed
+    /// </summary>
+    public void UpdateThresholdText() {
+        thresholdText.text = colorChangeThresholdSlider.value.ToString();
+    }
+
+    /// <summary>
+    /// Sets a new color change threshold value and updates arrows accordingly.
+    /// Called when our update threshold button is pressed
+    /// </summary>
+    /// <param name="_newThreshold">Our new threshold value</param>
+    public void UpdateThresholdValue() {
+
+        colorChangeThreshold = colorChangeThresholdSlider.value;
+        UpdateArrows();
 
     }
 

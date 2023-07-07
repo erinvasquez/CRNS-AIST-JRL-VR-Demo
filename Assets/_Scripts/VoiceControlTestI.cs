@@ -21,16 +21,8 @@ public class VoiceControlTestI : MonoBehaviour {
 
     /// <summary>
     /// Set up our keyword recognizer
-    /// TODO: move some code to Awake?
     /// </summary>
     void Start() {
-
-        // Show all our Microphone devices
-        /*
-        foreach (var device in Microphone.devices) {
-           Debug.Log("Name: " + device);
-        }
-        */
 
         // English language actions
         actions.Add("Left", MoveLeft);
@@ -60,8 +52,7 @@ public class VoiceControlTestI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Once a phrase is recognize, convert our speech to a string and print to Unity console,
-    /// 
+    /// Once a phrase is recognize, convert our speech to a string and print to Unity console
     /// </summary>
     /// <param name="speech"></param>
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech) {
