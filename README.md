@@ -136,11 +136,6 @@ be imported into the Unity Editor.
 Import the .UnityPackage file into your Unity project by going to: "Assets" -> "Import Package"
 -> "Custom Package" -> Select the Unity Package file.
 
-## Running the application with the Build File
-
-Included in the /Builds folder is a **"CRNS AIST JRL VR Demo.exe"**. To run the application,
-double-click the .exe.
-
 # Application Instructions
 
 Upon running the application, Tasks 1 and 2 can be accomplished and controlled using the
