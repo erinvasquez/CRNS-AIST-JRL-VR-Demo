@@ -2,6 +2,7 @@
  CRNS AIST JRL VR Assignment for VR Software Engineer interview. This project consists of two main
  tasks: Task 1 and Task 2. Each task involves different scripts and functionalities within the project.
 
+YouTube Link to our Demo: https://youtu.be/CUNNj6h22HU
 
 ## Task 1: Voice and Input Control
 Task 1 focuses on implementing voice and input control to interact with a UI element that indicates
